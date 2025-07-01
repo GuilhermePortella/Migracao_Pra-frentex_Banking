@@ -1,0 +1,8 @@
+env: dev
+tags:
+  - app:springboot-app
+  - owner:guilherme
+apm_config:
+  enabled: true
+logs_enabled: true
+log_level: INFO

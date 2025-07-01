@@ -1,0 +1,26 @@
+<configuration>
+  <appender name="DATADOG" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+          <timeZone>UTC</timeZone>
+        </timestamp>
+        <pattern>
+          <pattern>
+            {
+              "severity": "%level",
+              "service": "springboot-app",
+              "trace_id": "%X{dd.trace_id:-}",
+              "span_id": "%X{dd.span_id:-}",
+              "message": "%message"
+            }
+          </pattern>
+        </pattern>
+      </providers>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="DATADOG"/>
+  </root>
+</configuration>
