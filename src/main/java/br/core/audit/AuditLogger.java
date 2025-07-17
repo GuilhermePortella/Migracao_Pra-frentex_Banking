@@ -1,6 +1,6 @@
 package br.core.audit;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ public class AuditLogger {
 
    public void logOperation(String operation, String details) {
        String transactionId = UUID.randomUUID().toString();
-       LocalDate timestamp = LocalDate.now();
+       LocalDateTime timestamp = LocalDateTime.now();
 
        logger.info("Transaction ID: {}, Timestamp: {}, Operation: {}, Details: {}", 
                    transactionId, timestamp, operation, details);
