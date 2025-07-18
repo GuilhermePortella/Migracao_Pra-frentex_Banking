@@ -1,6 +1,38 @@
 # Pra-frentex_Banking
 
-Este projeto é uma aplicação Spring Boot para demonstração de funcionalidades, a ideia é simular uma modernização de um projeto já existem de um banco, nessa nova versão iremos atualizar a arquitetura do projeto, melhorar diversos pontos e implementar novos recursos deixando o projeto moderno e usando diversas tecnologias muito utilizadas em ambientes de produção e sistemas com grande fluxo de usuários, integrando diversas tecnologias para autenticação, segurança, mensageria, IA, documentação, monitoramento e mais.
+Este projeto é uma aplicação baseada em **Spring Boot**, desenvolvida com o objetivo de **simular a modernização de um sistema bancário legado**. Ele representa a transição de uma arquitetura tradicional em camadas para uma abordagem moderna, resiliente e escalável, utilizando boas práticas de engenharia de software e tecnologias amplamente adotadas no mercado.
+
+## ⚙️ Objetivos da Modernização
+
+- Reestruturar o sistema para **Arquitetura Hexagonal (Ports & Adapters)**, promovendo **baixo acoplamento** e **alta testabilidade**.
+- Centralizar regras de negócio aplicando **Domain-Driven Design (DDD)** e princípios **SOLID**.
+- Adotar **Spring Security** com base para futuras integrações (JWT, OAuth2).
+- Promover **observabilidade** com logs estruturados, métricas, tracing e monitoramento (✔️ **Datadog**, **Micrometer**, **Actuator**).
+- Preparar o sistema para **cloud-native** e **serverless (ex: AWS Lambda)** com foco em boas práticas **FinOps-friendly**.
+- Utilizar **mensageria assíncrona** (SQS, Kafka) para desacoplamento e resiliência.
+
+## 🔍 Tecnologias e Conceitos
+
+- **Java 17+**, **Spring Boot 3+**
+- **Arquitetura Hexagonal** (Ports & Adapters)
+- **Domain-Driven Design**, **SOLID**, **Clean Architecture**
+- **Validações customizadas** (ex: CPF, CNPJ)
+- **Spring Security** com preparação para OAuth2 e JWT
+- **Aspect-Oriented Programming (AOP)** para logging
+- **Spring Boot Actuator**, **Micrometer**, **Datadog Java Agent**
+- **Mensageria assíncrona** com suporte a SQS e Kafka
+- **Modularização por contextos de negócio (Bounded Contexts)**
+
+## Pilares da Modernização
+
+- **Isolamento de domínios:** separação clara entre regras de negócio (core domain), infraestrutura e serviços externos.
+- **Boas práticas arquiteturais:** aplicação de princípios SOLID, DDD, separação de responsabilidades e injeção de dependência.
+- **Observabilidade:** logs estruturados, rastreamento de transações com AOP e integração com ferramentas como Datadog e Micrometer.
+- **Resiliência:** arquitetura preparada para falhas externas (serviços downstream) com previsão de circuit breakers, retries e fallback.
+- **Preparação para Cloud:** modularização e desacoplamento que permitem fácil containerização e execução em ambientes como AWS ou Azure.
+- **Testabilidade:** maior cobertura de testes unitários e de integração graças ao desacoplamento por interfaces e uso de dependências mockáveis.
+- **Código Limpo:** padronização de pacotes, validações declarativas, e logging coerente com princípios de legibilidade e manutenção.
+
 
 ## Principais Dependências
 
