@@ -1,39 +1,49 @@
 package br.core.validation.cnpjvalidation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ValidatorCPNJ implements ConstraintValidator<ValidCNPJ, String> {
 
-    @Override
-    public void initialize(ValidCNPJ constraintAnnotation) {
-    }
+    private static final int[] WEIGHTS_DIGIT_1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+    private static final int[] WEIGHTS_DIGIT_2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
     @Override
     public boolean isValid(String cnpj, ConstraintValidatorContext context) {
-        if (cnpj == null) return false;
-
-        cnpj = cnpj.replaceAll("[^\\d]", "");
-
-        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) return false;
-
-        int[] pesos1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-        int soma = 0;
-        for (int i = 0; i < 12; i++) {
-            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos1[i];
+        if (cnpj == null) {
+            return true; 
         }
-        int resto = soma % 11;
-        char digito1 = (resto < 2) ? '0' : (char) ((11 - resto) + '0');
-        if (digito1 != cnpj.charAt(12)) return false;
+        
+        String cleanedCnpj = cnpj.replaceAll("\\D", "");
 
-        int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-        soma = 0;
-        for (int i = 0; i < 13; i++) {
-            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos2[i];
+        if (cleanedCnpj.length() != 14 || hasAllSameDigits(cleanedCnpj)) {
+            return false;
         }
-        resto = soma % 11;
-        char digito2 = (resto < 2) ? '0' : (char) ((11 - resto) + '0');
 
-        return digito2 == cnpj.charAt(13);
+        try {
+            String firstDigit = String.valueOf(calculateDigit(cleanedCnpj.substring(0, 12), WEIGHTS_DIGIT_1));
+            if (!cleanedCnpj.substring(12, 13).equals(firstDigit)) {
+                return false;
+            }
+
+            String secondDigit = String.valueOf(calculateDigit(cleanedCnpj.substring(0, 13), WEIGHTS_DIGIT_2));
+            return cleanedCnpj.substring(13, 14).equals(secondDigit);
+
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean hasAllSameDigits(String cnpj) {
+        return cnpj.chars().distinct().count() == 1;
+    }
+
+    private int calculateDigit(String base, int[] weights) {
+        int sum = 0;
+        for (int i = 0; i < base.length(); i++) {
+            sum += Character.getNumericValue(base.charAt(i)) * weights[i];
+        }
+        int remainder = sum % 11;
+        return (remainder < 2) ? 0 : 11 - remainder;
     }
 }
