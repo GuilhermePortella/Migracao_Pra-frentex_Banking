@@ -1,18 +1,16 @@
 package br.core.validation.cnpjvalidation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ValidatorCPNJ implements ConstraintValidator<ValidCNPJ, String> {
 
     @Override
-    public void initialize(ValidCNPJ constraintAnnotation) {
-    }
-
-    @Override
     public boolean isValid(String cnpj, ConstraintValidatorContext context) {
-        if (cnpj == null) return false;
-
+        if (cnpj == null) {
+            return true;
+        }
+        
         cnpj = cnpj.replaceAll("[^\\d]", "");
 
         if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) return false;
