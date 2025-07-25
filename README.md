@@ -156,26 +156,89 @@ Este projeto é uma aplicação baseada em **Spring Boot**, desenvolvida com o o
 
 ---
 
-## Como rodar
+## Como Executar o Projeto
 
-1. **Build:**  
-   ```sh
-   ./mvnw clean package
-   ```
+Este projeto pode ser executado de duas maneiras principais: a forma padrão, ideal para desenvolvimento rápido, ou com a integração de monitoramento da Datadog.
 
-2. **Executar:**  
-   ```sh
-   ./mvnw spring-boot:run
-   ```
+### 1. Execução Padrão (Sem Datadog)
 
-3. **Testes:**  
-   ```sh
-   ./mvnw test
-   ```
+Use os comandos do Maven Wrapper (`mvnw`) para compilar e rodar a aplicação.
+
+**Opção A: Comando Direto (Recomendado para desenvolvimento)**
+
+Este comando compila e inicia a aplicação em um único passo.
+```sh
+./mvnw spring-boot:run
+```
+
+**Opção B: Compilando o Pacote `.jar`**
+
+Este método é mais próximo de um ambiente de produção, onde você primeiro gera o artefato e depois o executa.
+
+1.  **Compile e empacote o projeto (pulando os testes):**
+    ```sh
+    ./mvnw clean package -DskipTests
+    ```
+2.  **Execute o arquivo JAR gerado:**
+    ```sh
+    java -jar target/backing-0.0.1-SNAPSHOT.jar
+    ```
+
+### 2. Execução com Monitoramento Datadog
+
+Para uma execução com observabilidade completa (traces, métricas e logs), utilize o script `start-with-datadog.sh`.
+
+#### Pré-requisitos
+
+*   **Java 17+** instalado.
+*   **Conta na Datadog** e uma **API Key** válida.
+
+#### Passo a Passo
+
+**1. Configure sua Chave da API do Datadog**
+
+O script utiliza uma variável de ambiente para carregar sua API Key de forma segura. Antes de executar, exporte a variável no seu terminal:
+
+*   **No Linux ou macOS:**
+    ```sh
+    export DATADOG_API_KEY='sua_chave_de_api_aqui'
+    ```
+*   **No Windows (PowerShell):**
+    ```powershell
+    $env:DATADOG_API_KEY="sua_chave_de_api_aqui"
+    ```
+> ⚠️ **Importante:** Substitua `sua_chave_de_api_aqui` pela sua chave real. Não armazene a chave diretamente no script.
+
+**2. Dê Permissão de Execução ao Script (Apenas Linux/macOS)**
+
+Pode ser necessário tornar o script executável:
+```sh
+chmod +x start-with-datadog.sh
+```
+
+**3. Execute o Script**
+
+Na raiz do projeto, execute:
+```sh
+./start-with-datadog.sh
+```
+
+#### O que o Script Faz?
+
+1.  **Verifica a API Key**: Confere se a variável de ambiente `DATADOG_API_KEY` foi definida.
+2.  **Compila o Projeto**: Executa `./mvnw clean install -DskipTests` para gerar o arquivo `.jar` na pasta `target`.
+3.  **Baixa o Agente Datadog**: Verifica se o `dd-java-agent.jar` existe e, caso contrário, baixa a versão mais recente.
+4.  **Inicia a Aplicação com o Agente**: Executa o `.jar` anexando o agente da Datadog (`-javaagent`), que instrumenta a aplicação para coletar e enviar dados de telemetria.
+
+## Como Rodar os Testes
+
+Para executar a suíte de testes unitários e de integração, utilize o comando:
+```sh
+./mvnw test
+```
 
 ## Observações
 
-- O projeto utiliza Java 17.
 - Para funcionalidades de IA, Redis e Kafka, é recomendado rodar os serviços via Docker Compose.
 - O monitoramento pode ser integrado ao Dynatrace.
 - A documentação da API pode ser gerada automaticamente via Spring REST Docs.
