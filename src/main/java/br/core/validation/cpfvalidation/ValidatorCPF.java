@@ -24,7 +24,6 @@ public class ValidatorCPF implements ConstraintValidator<ValidCPF, String> {
 
             return cleanedCpf.endsWith(primeiroDigito + segundoDigito);
         } catch (NumberFormatException e) {
-            // Não deve acontecer após remover caracteres não numéricos, mas é uma salvaguarda.
             return false;
         }
     }

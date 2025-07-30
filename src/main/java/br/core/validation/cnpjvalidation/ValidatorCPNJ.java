@@ -5,15 +5,15 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class ValidatorCPNJ implements ConstraintValidator<ValidCNPJ, String> {
 
-    private static final int[] WEIGHTS_DIGIT_1 = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-    private static final int[] WEIGHTS_DIGIT_2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+    private static final int[] WEIGHTS_DIGIT_1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+    private static final int[] WEIGHTS_DIGIT_2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
     @Override
     public boolean isValid(String cnpj, ConstraintValidatorContext context) {
         if (cnpj == null) {
-            return true; 
+            return true;
         }
-        
+
         String cleanedCnpj = cnpj.replaceAll("\\D", "");
 
         if (cleanedCnpj.length() != 14 || hasAllSameDigits(cleanedCnpj)) {

@@ -12,7 +12,7 @@ public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.csrf(csrf -> csrf.disable())
-            .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll());
+                .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll());
         return http.build();
     }
 }
