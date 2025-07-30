@@ -17,12 +17,12 @@ import java.util.Scanner;
 @Component
 public class ConsoleApplicationRunner implements CommandLineRunner {
 
-   private final CadastrarUsuarioUseCase cadastrarUsuarioUseCase;
-   private final Scanner scanner = new Scanner(System.in);
+    private final CadastrarUsuarioUseCase cadastrarUsuarioUseCase;
+    private final Scanner scanner = new Scanner(System.in);
 
-   public ConsoleApplicationRunner(CadastrarUsuarioUseCase cadastrarUsuarioUseCase) {
-       this.cadastrarUsuarioUseCase = cadastrarUsuarioUseCase;
-   }
+    public ConsoleApplicationRunner(CadastrarUsuarioUseCase cadastrarUsuarioUseCase) {
+        this.cadastrarUsuarioUseCase = cadastrarUsuarioUseCase;
+    }
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,7 +61,8 @@ public class ConsoleApplicationRunner implements CommandLineRunner {
             Usuario usuarioSalvo = cadastrarUsuarioUseCase.execute(novoUsuario, senha);
 
             System.out.println("\n--- CONTA CRIADA COM SUCESSO! ---");
-            System.out.printf("Titular: %s %s%nAgência: %s%nConta: %s%n", usuarioSalvo.getNome(), usuarioSalvo.getSobrenome(), usuarioSalvo.getAgencia(), usuarioSalvo.getConta());
+            System.out.printf("Titular: %s %s%nAgência: %s%nConta: %s%n", usuarioSalvo.getNome(),
+                    usuarioSalvo.getSobrenome(), usuarioSalvo.getAgencia(), usuarioSalvo.getConta());
         } catch (Exception e) {
             System.err.println("\nERRO AO CRIAR CONTA: " + e.getMessage());
         }

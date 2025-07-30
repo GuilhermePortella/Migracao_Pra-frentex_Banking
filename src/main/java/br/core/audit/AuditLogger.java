@@ -11,10 +11,10 @@ public class AuditLogger {
    private static final Logger logger = LoggerFactory.getLogger(AuditLogger.class);
 
    public void logOperation(String operation, String details) {
-       String transactionId = UUID.randomUUID().toString();
-       LocalDateTime timestamp = LocalDateTime.now();
+      String transactionId = UUID.randomUUID().toString();
+      LocalDateTime timestamp = LocalDateTime.now();
 
-       logger.info("Transaction ID: {}, Timestamp: {}, Operation: {}, Details: {}", 
-                   transactionId, timestamp, operation, details);
+      logger.info("Transaction ID: {}, Timestamp: {}, Operation: {}, Details: {}",
+            transactionId, timestamp, operation, details);
    }
 }

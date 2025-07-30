@@ -10,7 +10,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidCPF {
    String message() default "CPF inválido";
+
    Class<?>[] groups() default {};
+
    Class<? extends Payload>[] payload() default {};
 
 }
