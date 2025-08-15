@@ -14,18 +14,23 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Pra-frentex_Banking</name>
 	<description>Demo project for Spring Boot</description>
-	<url />
+	<url>https://github.com/GuilhermePortella/Migracao_Pra-frentex_Banking</url>
 	<licenses>
-		<license />
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
 	</licenses>
 	<developers>
-		<developer />
+		<developer>
+			<name>Guilherme Portella</name>
+			<email>guilhermeportella.dev@gmail.com</email>
+		</developer>
 	</developers>
 	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
+		<connection>scm:git:git://github.com/GuilhermePortella/Migracao_Pra-frentex_Banking.git</connection>
+		<developerConnection>scm:git:ssh://github.com:GuilhermePortella/Migracao_Pra-frentex_Banking.git</developerConnection>
+		<url>https://github.com/GuilhermePortella/Migracao_Pra-frentex_Banking/tree/main</url>
 	</scm>
 	<properties>
 		<java.version>17</java.version>
@@ -88,10 +93,6 @@
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-starter-vector-store-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>

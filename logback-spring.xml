@@ -1,4 +1,6 @@
 <configuration>
+  <springProperty scope="context" name="SERVICE_NAME" source="spring.application.name" defaultValue="springboot-app"/>
+
   <appender name="DATADOG" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
       <providers>
@@ -9,7 +11,7 @@
           <pattern>
             {
               "severity": "%level",
-              "service": "springboot-app",
+              "service": "${SERVICE_NAME}",
               "trace_id": "%X{dd.trace_id:-}",
               "span_id": "%X{dd.span_id:-}",
               "message": "%message"
