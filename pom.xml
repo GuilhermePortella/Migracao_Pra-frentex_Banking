@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br</groupId>
 	<artifactId>backing</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Pra-frentex_Banking</name>
 	<description>Demo project for Spring Boot</description>
 	<url>https://github.com/GuilhermePortella/Migracao_Pra-frentex_Banking</url>
