@@ -8,6 +8,7 @@ import br.domain.model.usuarios.Usuario;
 import br.domain.repository.UsuarioRepositoryPort;
 
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class CadastroUsuarioService implements CadastrarUsuarioUseCase {
@@ -31,7 +32,7 @@ public class CadastroUsuarioService implements CadastrarUsuarioUseCase {
         });
 
         String agencia = String.format("%04d", random.nextInt(10000));
-        String conta = String.format("%09d", random.nextInt(1000000000));
+        String conta = UUID.randomUUID().toString();
         usuario.atribuirNovaConta(agencia, conta);
 
         usuario.setSenhaHash(passwordEncoder.encode(senha));
