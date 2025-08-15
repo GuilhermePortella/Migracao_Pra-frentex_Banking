@@ -5,9 +5,6 @@
 # ========================
 SERVICE_NAME="springboot-app"
 ENVIRONMENT="dev"
-APP_VERSION="1.0.0"
-JAR_NAME="backing-0.0.1-SNAPSHOT.jar"
-JAR_PATH="target/$JAR_NAME"
 DD_AGENT_JAR="dd-java-agent.jar"
 
 # Leia a chave da API do Datadog de uma variável de ambiente para segurança.
@@ -27,6 +24,16 @@ if [ $? -ne 0 ]; then
   echo "❌ Erro ao compilar o projeto."
   exit 1
 fi
+
+echo "🔍 Lendo informações do projeto do pom.xml..."
+# Extrai a versão e o nome do artefato dinamicamente do pom.xml
+APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+ARTIFACT_ID=$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+JAR_NAME="${ARTIFACT_ID}-${APP_VERSION}.jar"
+JAR_PATH="target/${JAR_NAME}"
+
+echo "  - Versão da Aplicação: ${APP_VERSION}"
+echo "  - Caminho do JAR: ${JAR_PATH}"
 
 # ========================
 # 2. Baixa o agente se necessário
