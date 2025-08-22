@@ -11,4 +11,7 @@ public interface UsuarioRepositoryPort {
     Optional<Usuario> findByCpf(String cpf);
 
     Optional<Usuario> findByEmail(String email);
+
+    Optional<Usuario> findByAgenciaAndConta(String agencia, String conta);
 }
+

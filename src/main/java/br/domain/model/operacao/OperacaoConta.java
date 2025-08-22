@@ -1,14 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package br.domain.model.operacao;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
  *
  * @author Guilherme
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OperacaoConta {
+
+    private Long id;
+    private TipoOperacao tipo;
+    private LocalDateTime dataHora;
+    private String descricao;
 
 }
