@@ -1,6 +1,7 @@
 package br.infrastructure.cli;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import br.application.usecase.CadastrarUsuarioUseCase;
@@ -14,6 +15,7 @@ import java.util.Scanner;
  * Adaptador de Entrada (Driving Adapter) para interagir com a aplicação
  * via linha de comando (CLI). Substitui a lógica do antigo ServiceProcess.
  */
+@Profile("!test")
 @Component
 public class ConsoleApplicationRunner implements CommandLineRunner {
 
@@ -30,7 +32,7 @@ public class ConsoleApplicationRunner implements CommandLineRunner {
         System.out.println("O que você gostaria de fazer?");
         System.out.println("1. Abrir nova conta");
         System.out.println("2. Sair");
-        System.out.print("Escolha uma opção: ");
+        System.out.print("Escolha uma opcao: ");
 
         String opcao = scanner.nextLine();
 
