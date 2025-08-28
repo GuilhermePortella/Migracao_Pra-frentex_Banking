@@ -17,8 +17,12 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange(exchanges -> exchanges
+                        // TODO: Add more specific authorization rules here.
+                        // For example, to allow public access to the home page:
+                        // .pathMatchers("/").permitAll()
                         .anyExchange().authenticated()
                 )
+                .httpBasic(withDefaults())
                 .formLogin(withDefaults());
         return http.build();
     }
