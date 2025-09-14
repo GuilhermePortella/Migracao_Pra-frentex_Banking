@@ -11,8 +11,8 @@ class UsuarioPjTest {
     void testAtribuirNovaContaComSucesso() {
         UsuarioPj usuarioPj = new UsuarioPj(1L, "Razao Social", "Nome Fantasia", LocalDate.now(), "email@empresa.com", "12345678000190", "senha", null, null);
         usuarioPj.atribuirNovaConta("0002", "54321-0");
-        assertEquals("0002", usuarioPj.getAgencia());
-        assertEquals("54321-0", usuarioPj.getConta());
+        assertEquals("0002", usuarioPj.agencia());
+        assertEquals("54321-0", usuarioPj.conta());
     }
 
     @Test
@@ -38,14 +38,14 @@ class UsuarioPjTest {
         LocalDate dataAbertura = LocalDate.of(2010, 5, 15);
         UsuarioPj usuarioPj = new UsuarioPj(1L, "Razao Social Teste", "Nome Fantasia Teste", dataAbertura, "contato@empresa.com", "98765432000180", "outrasenha", "0003", "98765-4");
 
-        assertEquals(1L, usuarioPj.getId());
-        assertEquals("Razao Social Teste", usuarioPj.getRazaoSocial());
-        assertEquals("Nome Fantasia Teste", usuarioPj.getNomeFantasia());
-        assertEquals(dataAbertura, usuarioPj.getDataDeAbertura());
-        assertEquals("contato@empresa.com", usuarioPj.getEmail());
-        assertEquals("98765432000180", usuarioPj.getCnpj());
-        assertEquals("outrasenha", usuarioPj.getSenhaHash());
-        assertEquals("0003", usuarioPj.getAgencia());
-        assertEquals("98765-4", usuarioPj.getConta());
+        assertEquals(1L, usuarioPj.id());
+        assertEquals("Razao Social Teste", usuarioPj.razaoSocial());
+        assertEquals("Nome Fantasia Teste", usuarioPj.nomeFantasia());
+        assertEquals(dataAbertura, usuarioPj.dataDeAbertura()); 
+        assertEquals("contato@empresa.com", usuarioPj.email());
+        assertEquals("98765432000180", usuarioPj.cnpj());
+        assertEquals("outrasenha", usuarioPj.senhaHash());
+        assertEquals("0003", usuarioPj.agencia());
+        assertEquals("98765-4", usuarioPj.conta());
     }
 }
