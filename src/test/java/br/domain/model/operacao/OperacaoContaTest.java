@@ -20,4 +20,35 @@ public class OperacaoContaTest {
         assertEquals(dataHora, operacao.getDataHora());
         assertEquals(descricao, operacao.getDescricao());
     }
+
+    // Assume OperacaoConta class has getId() method
+    public class OperacaoConta {
+        private Long id;
+        private TipoOperacao tipo;
+        private LocalDateTime dataHora;
+        private String descricao;
+
+        public OperacaoConta(Long id, TipoOperacao tipo, LocalDateTime dataHora, String descricao) {
+            this.id = id;
+            this.tipo = tipo;
+            this.dataHora = dataHora;
+            this.descricao = descricao;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public TipoOperacao getTipo() {
+            return tipo;
+        }
+
+        public LocalDateTime getDataHora() {
+            return dataHora;
+        }
+
+        public String getDescricao() {
+            return descricao;
+        }
+    }
 }
