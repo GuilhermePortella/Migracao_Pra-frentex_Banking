@@ -15,7 +15,6 @@ public class ConsultaContaServiceImpl implements ConsultaContaService {
     private final List<Usuario> usuariosEmMemoria = new ArrayList<>();
 
     public ConsultaContaServiceImpl() {
-        // Criando uma conta padrão para testes, como solicitado
         Usuario usuarioTeste = new Usuario(
                 1L,
                 "Cliente",
@@ -29,10 +28,7 @@ public class ConsultaContaServiceImpl implements ConsultaContaService {
         );
         this.usuariosEmMemoria.add(usuarioTeste);
     }
-
-    /**
-     * Simula o método findByAgenciaAndConta do UsuarioRepositoryPort.
-     */
+    
     private Optional<Usuario> findByAgenciaAndConta(String agencia, String conta) {
         return usuariosEmMemoria.stream()
                 .filter(u -> u.getAgencia().equals(agencia) && u.getConta().equals(conta))
