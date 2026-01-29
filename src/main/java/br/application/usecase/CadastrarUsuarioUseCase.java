@@ -7,3 +7,4 @@ public interface CadastrarUsuarioUseCase {
     Usuario execute(Usuario usuario, String senha);
 
 }
+
