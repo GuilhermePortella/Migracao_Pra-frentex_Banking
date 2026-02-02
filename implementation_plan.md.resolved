@@ -1,0 +1,22 @@
+# Implementation Plan - Login System Documentation
+
+The goal is to create a blueprint for the Login System within the codebase, using Javadoc to document the architecture, security flows, and best practices directly in a new `LoginService` interface.
+
+## Proposed Changes
+
+### br.application.service
+
+#### [NEW] [LoginService.java](file:///c:/Users/Guilherme/Desktop/Estudos_avancados/Git/new/backing/src/main/java/br/application/service/LoginService.java)
+- Create a new interface `LoginService`.
+- **Class Documentation**:
+    - Explain the "Java Local" architecture (H2/Derby usage).
+    - Outline the Security Pillars: Registration (Salting/Hashing) and Authentication flows.
+- **Method Documentation (`login`)**:
+    - Step-by-step logic: Find user -> Check block status -> Verify Hash -> Audit -> Manage Session.
+- **Method Documentation (`bloquear`)**:
+    - Explanation of brute-force protection logic.
+
+## Verification Plan
+
+### Manual Verification
+- Read the created file to ensure the Javadoc is correctly formatted and contains all the architectural advice discussed.
