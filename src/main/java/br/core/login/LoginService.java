@@ -1,4 +1,4 @@
-package br.application.service;
+package br.core.login;
 
 /**
  * Serviço responsável pela autenticação e gestão de segurança do usuário.
