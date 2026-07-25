@@ -33,3 +33,4 @@ build/
 .vscode/
 nb-configuration.xml
 bash.exe.stackdump
+.DS_Store

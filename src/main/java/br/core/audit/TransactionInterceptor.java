@@ -17,7 +17,7 @@ public class TransactionInterceptor {
 
    private static final Logger logger = LoggerFactory.getLogger(TransactionInterceptor.class);
 
-   @Around("@annotation(br.service.audit.LoggedTransaction)")
+   @Around("@annotation(br.core.audit.LoggedTransaction)")
    public Object logTransaction(ProceedingJoinPoint joinPoint) throws Throwable {
       LocalDateTime inicio = LocalDateTime.now();
 
