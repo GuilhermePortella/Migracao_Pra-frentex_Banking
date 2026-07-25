@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  packages: read
+
 jobs:
   bump-version:
     # Nao executa a action se o commit for do proprio bot para evitar loops
@@ -24,6 +28,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
+          server-id: github
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_TOKEN
 
       - name: Configure Git User
         run: |
@@ -31,6 +38,10 @@ jobs:
           git config user.email "actions-bot@github.com"
 
       - name: Bump patch version
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Incrementa a versao patch (0.0.X)
           mvn versions:increment-property -Dproperty=project.version -DallowSnapshots=true

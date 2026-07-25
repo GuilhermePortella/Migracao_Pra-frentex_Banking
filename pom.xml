@@ -221,6 +221,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages - Pra-frentex Banking Login</name>
+            <url>https://maven.pkg.github.com/GuilhermePortella/Pra-frentex_Banking-login</url>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <plugin>
