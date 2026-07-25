@@ -38,9 +38,12 @@
         <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
         <dependency-check-maven.version>12.1.0</dependency-check-maven.version>
         <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
+        <log4j2.version>2.25.5</log4j2.version>
+        <netty.version>4.1.136.Final</netty.version>
         <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
-        <spring-ai.version>1.0.9</spring-ai.version>
+        <spring-ai.version>1.1.8</spring-ai.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
+        <tomcat.version>10.1.57</tomcat.version>
     </properties>
     <dependencies>
 
@@ -317,9 +320,16 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven.version}</version>
                 <configuration>
+                    <dataDirectory>${user.home}/.m2/dependency-check-data</dataDirectory>
                     <failBuildOnCVSS>7</failBuildOnCVSS>
                     <format>ALL</format>
                     <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
+                    <nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
+                    <yarnAuditAnalyzerEnabled>false</yarnAuditAnalyzerEnabled>
+                    <pnpmAuditAnalyzerEnabled>false</pnpmAuditAnalyzerEnabled>
+                    <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
                     <suppressionFiles>
                         <suppressionFile>config/owasp-dependency-check/suppressions.xml</suppressionFile>
                     </suppressionFiles>
