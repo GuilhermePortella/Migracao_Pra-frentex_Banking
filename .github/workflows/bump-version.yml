@@ -8,20 +8,20 @@ on:
 
 jobs:
   bump-version:
-    # Não executa a action se o commit for do próprio bot para evitar loops
+    # Nao executa a action se o commit for do proprio bot para evitar loops
     if: "!contains(github.event.head_commit.message, 'ci: Bump version')"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Precisamos do token para poder fazer push de volta para o repositório
+          # Precisamos do token para poder fazer push de volta para o repositorio
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
 
@@ -32,11 +32,10 @@ jobs:
 
       - name: Bump patch version
         run: |
-          # Incrementa a versão patch (0.0.X)
+          # Incrementa a versao patch (0.0.X)
           mvn versions:increment-property -Dproperty=project.version -DallowSnapshots=true
-          # Pega a nova versão para usar na mensagem de commit
+          # Pega a nova versao para usar na mensagem de commit
           NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          # Faz o commit da nova versão no pom.xml
+          # Faz o commit da nova versao no pom.xml
           git commit -am "ci: Bump version to $NEW_VERSION"
           git push
-
