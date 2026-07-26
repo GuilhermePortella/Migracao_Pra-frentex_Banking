@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Aspect
-@Component
+@Component("auditTransactionInterceptor")
 public class TransactionInterceptor {
 
    private static final Logger logger = LoggerFactory.getLogger(TransactionInterceptor.class);

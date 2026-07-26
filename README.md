@@ -1,6 +1,6 @@
 # Pra-frentex_Banking
 
-![Java](https://img.shields.io/badge/Java-17-blue.svg)
+![Java](https://img.shields.io/badge/Java-21-blue.svg)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)
 ![Maven](https://img.shields.io/badge/Maven-3.x-orange.svg)
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
@@ -69,7 +69,7 @@ Este projeto utiliza um conjunto moderno de tecnologias para construir uma aplic
 
 | Categoria         | Tecnologias                                                                                             |
 | ----------------- | ------------------------------------------------------------------------------------------------------- |
-| **Core Framework**  | `Java 17`, `Spring Boot 3`, `Lombok`                                                                    |
+| **Core Framework**  | `Java 21`, `Spring Boot 3`, `Lombok`                                                                    |
 | **Web & API**       | `Spring Web`, `Spring Data REST`, `Spring HATEOAS`                                                        |
 | **Segurança**       | `Spring Security`, `OAuth2` (Authorization Server, Client, Resource Server)                             |
 | **Dados & Persistência** | `Spring Data` (Redis, LDAP), `Flyway` (Database Migration)                                              |
@@ -86,7 +86,7 @@ Siga os passos abaixo para compilar e executar o projeto localmente.
 
 ### Pré-requisitos
 
-- **Java 17** (ou superior)
+- **Java 21**
 - **Apache Maven** 3.8+
 - **Docker** e **Docker Compose** (recomendado para rodar dependências como Redis e Kafka)
 

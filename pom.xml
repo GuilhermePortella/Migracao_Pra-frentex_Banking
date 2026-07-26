@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.16</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>br</groupId>
@@ -34,8 +34,16 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>1.0.0</spring-ai.version>
+        <checkstyle-maven-plugin.version>3.6.0</checkstyle-maven-plugin.version>
+        <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
+        <dependency-check-maven.version>12.1.0</dependency-check-maven.version>
+        <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
+        <log4j2.version>2.25.5</log4j2.version>
+        <netty.version>4.1.136.Final</netty.version>
+        <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
+        <spring-ai.version>1.1.8</spring-ai.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
+        <tomcat.version>10.1.57</tomcat.version>
     </properties>
     <dependencies>
 
@@ -120,12 +128,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-dynatrace</artifactId>
             <scope>runtime</scope>
@@ -137,11 +139,6 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-tracing-bridge-brave</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.datadoghq</groupId>
-            <artifactId>dd-java-agent</artifactId>
-            <version>1.46.0</version>
         </dependency>
         <dependency>
             <groupId>net.logstash.logback</groupId>
@@ -217,6 +214,13 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages - Pra-frentex Banking Login</name>
+            <url>https://maven.pkg.github.com/GuilhermePortella/Pra-frentex_Banking-login</url>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -281,7 +285,79 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.16.2</version>
             </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>High</threshold>
+                    <failOnError>true</failOnError>
+                    <xmlOutput>true</xmlOutput>
+                    <htmlOutput>true</htmlOutput>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>${findsecbugs-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle-maven-plugin.version}</version>
+                <configuration>
+                    <configLocation>config/checkstyle/checkstyle.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <configuration>
+                    <dataDirectory>${user.home}/.m2/dependency-check-data</dataDirectory>
+                    <failBuildOnCVSS>7</failBuildOnCVSS>
+                    <format>ALL</format>
+                    <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
+                    <nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
+                    <yarnAuditAnalyzerEnabled>false</yarnAuditAnalyzerEnabled>
+                    <pnpmAuditAnalyzerEnabled>false</pnpmAuditAnalyzerEnabled>
+                    <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
+                    <suppressionFiles>
+                        <suppressionFile>config/owasp-dependency-check/suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                </configuration>
+            </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.cyclonedx</groupId>
+                    <artifactId>cyclonedx-maven-plugin</artifactId>
+                    <version>${cyclonedx-maven-plugin.version}</version>
+                    <configuration>
+                        <projectType>application</projectType>
+                        <schemaVersion>1.6</schemaVersion>
+                        <includeBomSerialNumber>true</includeBomSerialNumber>
+                        <includeCompileScope>true</includeCompileScope>
+                        <includeProvidedScope>true</includeProvidedScope>
+                        <includeRuntimeScope>true</includeRuntimeScope>
+                        <includeSystemScope>true</includeSystemScope>
+                        <includeTestScope>false</includeTestScope>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <outputName>bom</outputName>
+                        <outputFormat>all</outputFormat>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
