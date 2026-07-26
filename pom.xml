@@ -39,6 +39,9 @@
         <cyclonedx-maven-plugin.version>2.9.1</cyclonedx-maven-plugin.version>
         <dependency-check-maven.version>12.1.0</dependency-check-maven.version>
         <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
+        <!-- Security overrides for versions managed by Spring Boot. -->
+        <hibernate-validator.version>8.0.4.Final</hibernate-validator.version>
+        <jackson-bom.version>2.21.5</jackson-bom.version>
         <log4j2.version>2.25.5</log4j2.version>
         <netty.version>4.1.136.Final</netty.version>
         <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>

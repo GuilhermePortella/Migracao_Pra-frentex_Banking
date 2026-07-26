@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress>
+        <notes><![CDATA[
+            CVE-2017-1000248 is for the Ruby redis-store project (redis-store/redis-store),
+            not org.springframework.ai:spring-ai-redis-store. The CPE match is a false positive.
+            Keep this suppression scoped to the Spring AI Redis Store Maven artifact.
+        ]]></notes>
+        <cve>CVE-2017-1000248</cve>
+        <gav regex="true">^org\.springframework\.ai:spring-ai-redis-store:.*$</gav>
+    </suppress>
 </suppressions>
