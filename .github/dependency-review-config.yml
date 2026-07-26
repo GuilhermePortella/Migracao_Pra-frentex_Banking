@@ -1,0 +1,16 @@
+fail-on-severity: high
+license-check: true
+vulnerability-check: true
+
+# GitHub Actions are reviewed as workflow supply-chain dependencies, but their
+# license metadata is often reported as Null/Unknown by SCA tooling. Keep the
+# license exception scoped to actions only; Maven dependencies remain checked.
+allow-dependencies-licenses:
+  - pkg:githubactions/actions/cache
+  - pkg:githubactions/actions/checkout
+  - pkg:githubactions/actions/dependency-review-action
+  - pkg:githubactions/actions/setup-java
+  - pkg:githubactions/actions/upload-artifact
+  - pkg:githubactions/github/codeql-action
+  - pkg:githubactions/gitleaks/gitleaks-action
+  - pkg:githubactions/semgrep/semgrep-action

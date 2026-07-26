@@ -101,7 +101,7 @@ jobs:
       - name: Review dependency changes
         uses: actions/dependency-review-action@v4
         with:
-          fail-on-severity: high
+          config-file: ./.github/dependency-review-config.yml
 
   maven-security:
     name: Maven Static Gates
