@@ -2,23 +2,23 @@ package br.domain.model.usuarios;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ContaPjTest {
 
-    @Mock
     private UsuarioPj usuarioPj;
 
     private ContaPj contaPj;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
+        usuarioPj = new UsuarioPj(1L, "Razao Social", "Nome Fantasia",
+                LocalDate.of(2010, 5, 15), "contato@empresa.com", "98765432000180",
+                "senha-hash", "0001", "conta-001");
         contaPj = new ContaPj(1L, usuarioPj, new BigDecimal("1000.00"), new BigDecimal("500.00"));
     }
 
