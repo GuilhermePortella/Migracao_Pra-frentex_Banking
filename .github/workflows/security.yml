@@ -219,9 +219,13 @@ jobs:
         env:
           DATADOG_API_KEY: disabled-for-dast
         run: |
-          java -jar target/backing-*.jar --spring.profiles.active=test > app.log 2>&1 &
+          java -jar target/backing-*.jar --spring.profiles.active=test --server.address=127.0.0.1 > app.log 2>&1 &
           echo $! > app.pid
           for attempt in {1..60}; do
+            if ! kill -0 "$(cat app.pid)" 2>/dev/null; then
+              cat app.log
+              exit 1
+            fi
             if curl -fsS -u teste:teste "http://localhost:9000/hello-world?name=DAST" > /dev/null; then
               exit 0
             fi
