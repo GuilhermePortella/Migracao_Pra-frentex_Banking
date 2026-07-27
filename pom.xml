@@ -42,6 +42,7 @@
         <!-- Security overrides for versions managed by Spring Boot. -->
         <hibernate-validator.version>8.0.4.Final</hibernate-validator.version>
         <log4j2.version>2.25.5</log4j2.version>
+        <netty.version>4.2.16.Final</netty.version>
         <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
         <spring-ai.version>2.0.0</spring-ai.version>
         <spring-cloud.version>2025.1.2</spring-cloud.version>

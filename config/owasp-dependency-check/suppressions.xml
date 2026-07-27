@@ -21,4 +21,15 @@
         <gav regex="true">^org\.hibernate\.validator:hibernate-validator:.*$</gav>
         <cve>CVE-2025-15104</cve>
     </suppress>
+    <suppress until="2027-07-26Z">
+        <notes><![CDATA[
+            CVE-2021-4236 is for the Go module github.com/ecnepsnai/web, not
+            io.zipkin.aws:brave-propagation-aws. The generic "web" CPE match is
+            a false positive.
+            Source: https://nvd.nist.gov/vuln/detail/CVE-2021-4236
+            Review by 2027-07-26.
+        ]]></notes>
+        <gav regex="true">^io\.zipkin\.aws:brave-propagation-aws:.*$</gav>
+        <cve>CVE-2021-4236</cve>
+    </suppress>
 </suppressions>
