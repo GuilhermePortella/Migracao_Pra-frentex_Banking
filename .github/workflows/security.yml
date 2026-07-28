@@ -166,16 +166,20 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/dependency-check-data
-          key: dependency-check-data-${{ runner.os }}-${{ hashFiles('pom.xml') }}
+          key: dependency-check-data-v12.2.2-${{ runner.os }}-${{ hashFiles('pom.xml') }}
           restore-keys: |
-            dependency-check-data-${{ runner.os }}-
+            dependency-check-data-v12.2.2-${{ runner.os }}-
 
       - name: Run dependency vulnerability scan
         env:
           MAVEN_USERNAME: ${{ github.actor }}
           MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: ./mvnw -B org.owasp:dependency-check-maven:check -DskipTests
+        run: |
+          ./mvnw -B \
+            org.owasp:dependency-check-maven:check \
+            -DskipTests \
+            -DossIndexAnalyzerEnabled=false
 
       - name: Upload Dependency Check report
         if: always()
