@@ -166,9 +166,37 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/dependency-check-data
-          key: dependency-check-data-v12.2.2-${{ runner.os }}-${{ hashFiles('pom.xml') }}
+          # v2 prevents restoration of the database that produced a null connection pool.
+          key: dependency-check-data-v12.2.2-v2-${{ runner.os }}-${{ hashFiles('pom.xml') }}
           restore-keys: |
-            dependency-check-data-v12.2.2-${{ runner.os }}-
+            dependency-check-data-v12.2.2-v2-${{ runner.os }}-
+
+      - name: Validate NVD API key
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          if [[ -z "${NVD_API_KEY:-}" ]]; then
+            echo "::error::The NVD_API_KEY Actions secret is missing or empty."
+            exit 1
+          fi
+
+      - name: Update vulnerability database
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          if ! ./mvnw -B \
+            org.owasp:dependency-check-maven:update-only \
+            -DskipTests \
+            -DossIndexAnalyzerEnabled=false; then
+            echo "::warning::The cached vulnerability database could not be updated; purging it and retrying once."
+            ./mvnw -B org.owasp:dependency-check-maven:purge
+            ./mvnw -B \
+              org.owasp:dependency-check-maven:update-only \
+              -DskipTests \
+              -DossIndexAnalyzerEnabled=false
+          fi
 
       - name: Run dependency vulnerability scan
         env:
@@ -178,6 +206,7 @@ jobs:
         run: |
           ./mvnw -B \
             org.owasp:dependency-check-maven:check \
+            -DautoUpdate=false \
             -DskipTests \
             -DossIndexAnalyzerEnabled=false
 
