@@ -171,13 +171,12 @@ jobs:
           restore-keys: |
             dependency-check-data-v12.2.2-v2-${{ runner.os }}-
 
-      - name: Validate NVD API key
+      - name: Check NVD API mode
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
           if [[ -z "${NVD_API_KEY:-}" ]]; then
-            echo "::error::The NVD_API_KEY Actions secret is missing or empty."
-            exit 1
+            echo "::notice::NVD_API_KEY is not configured; Dependency-Check will use the public NVD API with a lower request rate."
           fi
 
       - name: Update vulnerability database
