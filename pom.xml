@@ -286,7 +286,9 @@
                     <failBuildOnCVSS>7</failBuildOnCVSS>
                     <format>ALL</format>
 
-                    <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                    <!-- Recommended for CI: reads the key without exposing its value
+                         through Maven's effective configuration/debug output. -->
+                    <nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
 
                     <!-- Evita chamadas não autenticadas ao Sonatype OSS Index. -->
                     <ossIndexAnalyzerEnabled>false</ossIndexAnalyzerEnabled>
