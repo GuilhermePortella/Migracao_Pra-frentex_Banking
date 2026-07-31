@@ -12,5 +12,3 @@ allow-dependencies-licenses:
   - pkg:githubactions/actions/setup-java
   - pkg:githubactions/actions/upload-artifact
   - pkg:githubactions/github/codeql-action
-  - pkg:githubactions/gitleaks/gitleaks-action
-  - pkg:githubactions/semgrep/semgrep-action
