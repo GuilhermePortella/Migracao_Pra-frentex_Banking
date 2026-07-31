@@ -1,0 +1,76 @@
+name: Critical Dependency Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+concurrency:
+  group: critical-dependency-scan
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  dependency-check:
+    name: OWASP Critical Vulnerabilities
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          server-id: github
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_TOKEN
+
+      - name: Restore vulnerability database
+        id: dependency-check-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.m2/dependency-check-data
+          key: dependency-check-v12.2.2-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            dependency-check-v12.2.2-${{ runner.os }}-
+
+      - name: Update vulnerability database
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: |
+          ./mvnw -B \
+            org.owasp:dependency-check-maven:update-only \
+            -DskipTests
+
+      - name: Save vulnerability database
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.m2/dependency-check-data
+          key: ${{ steps.dependency-check-cache.outputs.cache-primary-key }}
+
+      - name: Scan critical vulnerabilities
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
+        run: |
+          ./mvnw -B \
+            org.owasp:dependency-check-maven:check \
+            -DautoUpdate=false \
+            -DskipTests
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-critical-report
+          path: target/dependency-check-report.html
+          if-no-files-found: warn

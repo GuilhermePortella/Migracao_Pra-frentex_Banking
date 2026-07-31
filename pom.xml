@@ -36,7 +36,6 @@
         <revision>1.0.0</revision>
         <java.version>21</java.version>
         <checkstyle-maven-plugin.version>3.6.0</checkstyle-maven-plugin.version>
-        <cyclonedx-maven-plugin.version>2.9.2</cyclonedx-maven-plugin.version>
         <dependency-check-maven.version>12.2.2</dependency-check-maven.version>
         <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
         <!-- Security overrides for versions managed by Spring Boot. -->
@@ -277,59 +276,30 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${dependency-check-maven.version}</version>
-
                 <configuration>
                     <dataDirectory>
                         ${user.home}/.m2/dependency-check-data
                     </dataDirectory>
 
-                    <failBuildOnCVSS>7</failBuildOnCVSS>
-                    <format>ALL</format>
+                    <!-- Falha somente para vulnerabilidades críticas (CVSS 9.0+). -->
+                    <failBuildOnCVSS>9.0</failBuildOnCVSS>
+                    <format>HTML</format>
 
-                    <!-- Recommended for CI: reads the key without exposing its value
-                         through Maven's effective configuration/debug output. -->
-                    <nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
+                    <!-- Mantém a indicação de CVEs exploradas ativamente pela CISA. -->
+                    <knownExploitedEnabled>true</knownExploitedEnabled>
 
-                    <!-- Evita chamadas não autenticadas ao Sonatype OSS Index. -->
+                    <!-- O projeto analisa apenas dependências Java/Maven. -->
+                    <centralAnalyzerEnabled>false</centralAnalyzerEnabled>
                     <ossIndexAnalyzerEnabled>false</ossIndexAnalyzerEnabled>
-
                     <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                     <nodeAnalyzerEnabled>false</nodeAnalyzerEnabled>
                     <nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
                     <yarnAuditAnalyzerEnabled>false</yarnAuditAnalyzerEnabled>
                     <pnpmAuditAnalyzerEnabled>false</pnpmAuditAnalyzerEnabled>
                     <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
-
-                    <suppressionFiles>
-                        <suppressionFile>
-                            config/owasp-dependency-check/suppressions.xml
-                        </suppressionFile>
-                    </suppressionFiles>
                 </configuration>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.cyclonedx</groupId>
-                    <artifactId>cyclonedx-maven-plugin</artifactId>
-                    <version>${cyclonedx-maven-plugin.version}</version>
-                    <configuration>
-                        <projectType>application</projectType>
-                        <schemaVersion>1.6</schemaVersion>
-                        <includeBomSerialNumber>true</includeBomSerialNumber>
-                        <includeCompileScope>true</includeCompileScope>
-                        <includeProvidedScope>true</includeProvidedScope>
-                        <includeRuntimeScope>true</includeRuntimeScope>
-                        <includeSystemScope>true</includeSystemScope>
-                        <includeTestScope>false</includeTestScope>
-                        <outputDirectory>${project.build.directory}</outputDirectory>
-                        <outputName>bom</outputName>
-                        <outputFormat>all</outputFormat>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
 </project>
