@@ -35,7 +35,7 @@ jobs:
 
       - name: Restore vulnerability database
         id: dependency-check-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ~/.m2/dependency-check-data
           key: dependency-check-v12.2.2-${{ runner.os }}-${{ github.run_id }}
@@ -52,7 +52,7 @@ jobs:
             -DskipTests
 
       - name: Save vulnerability database
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ~/.m2/dependency-check-data
           key: ${{ steps.dependency-check-cache.outputs.cache-primary-key }}
