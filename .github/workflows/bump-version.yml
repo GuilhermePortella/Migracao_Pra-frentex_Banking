@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Precisamos do token para poder fazer push de volta para o repositorio
           token: ${{ secrets.GITHUB_TOKEN }}
