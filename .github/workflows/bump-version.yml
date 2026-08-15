@@ -14,6 +14,7 @@ on:
 permissions:
   contents: write
   packages: read
+  pull-requests: write
 
 jobs:
   bump-version:
@@ -26,7 +27,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Precisamos do token para poder fazer push de volta para o repositorio
+          # O token sera usado para publicar a branch com a nova versao.
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
 
@@ -49,7 +50,7 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ github.actor }}
           MAVEN_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN || github.token }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           CURRENT_VERSION=$(./mvnw help:evaluate -Dexpression=revision -q -DforceStdout)
           BASE_VERSION="${CURRENT_VERSION%-SNAPSHOT}"
@@ -61,11 +62,21 @@ jobs:
           fi
 
           NEW_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+          VERSION_BRANCH="ci/bump-version-${NEW_VERSION}-${GITHUB_RUN_ID}"
+
+          git switch -c "$VERSION_BRANCH"
 
           ./mvnw -B versions:set-property \
             -Dproperty=revision \
             -DnewVersion="${NEW_VERSION}" \
             -DgenerateBackupPoms=false
 
-          git commit -am "ci: Bump version to $NEW_VERSION"
-          git push
+          git add pom.xml
+          git commit -m "ci: Bump version to $NEW_VERSION"
+          git push --set-upstream origin "$VERSION_BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$VERSION_BRANCH" \
+            --title "ci: Bump version to $NEW_VERSION" \
+            --body "Atualiza automaticamente a versao de $CURRENT_VERSION para $NEW_VERSION."
