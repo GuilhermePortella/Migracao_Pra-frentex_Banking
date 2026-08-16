@@ -25,14 +25,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # O token sera usado para publicar a branch com a nova versao.
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5.6.0
+        uses: actions/setup-java@v5.7.0
         with:
           java-version: '21'
           distribution: 'temurin'
