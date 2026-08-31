@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.0</version>
+        <version>4.1.1</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>br</groupId>
@@ -33,7 +33,7 @@
         <url>https://github.com/GuilhermePortella/Migracao_Pra-frentex_Banking/tree/main</url>
     </scm>
     <properties>
-        <revision>1.0.2</revision>
+        <revision>1.0.3</revision>
         <java.version>21</java.version>
         <checkstyle-maven-plugin.version>3.6.0</checkstyle-maven-plugin.version>
         <dependency-check-maven.version>13.0.0</dependency-check-maven.version>
